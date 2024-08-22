@@ -72,8 +72,9 @@ export class RdcStack extends cdk.Stack {
     const userData = ec2.UserData.forLinux();
     userData.addCommands(
       dockerScript,
+      'sudo snap install aws-cli --classic',
       'mkdir -p /home/ubuntu/ec2-resources',
-      `aws s3 cp s3://${bucket.bucketName}/ /home/ubuntu/ec2-resources --recursive`
+      `aws s3 cp s3://${bucket.bucketDomainName}/ /home/ubuntu/ec2-resources --recursive`
     );
     instance.addUserData(userData.render());
 
